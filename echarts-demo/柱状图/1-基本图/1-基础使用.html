@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>柱状图：1-基本使用</title>
+
+    <style>
+        #echartMap {
+            width: 800px;
+            height: 600px;
+            border: 1px solid #aaa;
+            margin: 0 auto;
+        }
+    </style>
+    <script src="../../assets/js/jquery.min.js"></script>
+    <script src="../../assets/js/echarts.min.js"></script>
+</head>
+
+<body>
+
+    <div id="echartMap"></div>
+    <script>
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echartMap'));
+        let option = {
+            color: ['#3398DB'],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [{
+                type: 'category',
+                data: [
+                    "2019-10-01 14:00:00",
+                    "2019-10-02 14:00:00",
+                    "2019-10-03 14:00:00",
+                    "2019-10-04 14:00:00",
+                    "2019-10-05 14:00:00",
+                    "2019-10-06 14:00:00",
+                    "2019-10-07 14:00:00",
+                ],
+                
+                // x轴 轴线 的相关设置
+                axisLine: {
+                    show: true, // 是否显示坐标轴
+                    onZero: true, // 坐标轴的轴线是否在另一个坐标轴的轴线的0刻度上， 只有在另一个轴为数值轴且包含 0 刻度时有效。
+                    onZeroAxisIndex: 0, // 当有双轴时，可以用这个属性手动指定，在哪个轴的 0 刻度上。
+                    symbol: 'none', // 轴线两边的箭头。可以是字符串，表示两端使用同样的箭头；或者长度为 2 的字符串数组，分别表示两端的箭头。默认不显示箭头，即 'none'。两端都显示箭头可以设置为 'arrow'，只在末端显示箭头可以设置为 ['none', 'arrow']。
+                    symbolSize: [10, 15], // 轴线两边的箭头的大小，[宽， 高]， 第一个数字表示宽度（垂直坐标轴方向），第二个数字表示高度（平行坐标轴方向）。
+                    symbolOffset: [0, 0], // 轴线两边的箭头的偏移，如果是数组，第一个数字表示起始箭头的偏移，第二个数字表示末端箭头的偏移；如果是数字，表示这两个箭头使用同样的偏移。
+                    lineStyle: {
+                        color: "#333", // 坐标轴线线的颜色。
+                        width: 2, // 坐标轴线线的宽度
+                        type: "solid", // 坐标轴轴线的样式种类， solid, dashed, dotted,
+                        shadowBlur: 5, // 图形阴影的模糊大小。
+                        shadowColor: "#aaa", // 阴影颜色
+                        shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                        shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                        opacity: 0.5, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                    },
+                },
+
+                // X 轴 刻度 相关配置
+                axisTick: {
+                    show: true,
+
+                    alignWithLabel: true, // X轴值对齐到刻度线
+                    interval: 'auto', // number, Function, 坐标轴刻度的显示间隔
+                    inside: true, // 坐标轴刻度是否朝内，默认朝外。
+                    length: 5, // 坐标轴刻度的长度。
+                    lineStyle: {
+                        color: "#666", // 刻度线的颜色
+                        width: 2, // 刻度线的宽度
+                        type: 'solid', // 刻度线的种类， solid, dashed, dotted,
+                        shadowColor: "transparent", // 文字块的背景阴影颜色
+                        shadowBlur: 0, // 文字块的阴影长度
+                        shadowOffsetX: 0, // 文字块的背景阴影X偏移
+                        shadowOffsety: 0,// 文字块的背景阴影Y偏移
+                        opacity: 0.5, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                    },
+
+                },
+
+                // x轴标签相关配置
+                axisLabel: {
+                    show: true, // 是否显示x轴 刻度标签
+                    // interval: 3, // 每3个刻度线 才显示一个刻度线; 隔n个标签显示一个标签, 不设置该字段时会根据x轴的数据字段调整显示的间隔防止x轴显示混乱
+                    // inside: true, // 刻度线朝内还是朝外, true: 朝内
+                    rotate: 45, // 刻度标签旋转的角度； 只旋转x轴线上数据的值，不旋转刻度线， 在类目轴的类目标签显示不下的时候可以通过旋转防止标签之间重叠。
+                    margin: 30, //刻度标签与轴线之间的距离。
+                    // formatter: null, //string, Function 刻度标签的内容格式器，支持字符串模板和回调函数两种形式。
+                    formatter: function(value, index) {
+                        // 2019-10-01 12:00:00
+                        return value.slice(0, 10)  // 2019-10-01 
+                    }, // 刻度标签的内容格式器，支持字符串模板和回调函数两种形式。
+                    showMinLabel: true, //true, false, null,  是否显示最小 tick 的 label。可取值 true, false, null。默认自动判定（即如果标签重叠，不会显示最小 tick 的 label）。
+                    showMaxLabel: true, //true, false, null,  是否显示最大 tick 的 label。可取值 true, false, null。默认自动判定（即如果标签重叠，不会显示最小 tick 的 label）。
+
+                    color: "#ff0000", // 刻度标签文字的颜色
+                    fontStyle: "normal", // normal(默认)， italic, oblique
+                    fontWeight: "normal", // normal(默认)， bold, bolder, lighter
+                    fontFamily: "sans-serif", // 文字的字体， sans-serif（默认）， 还可以是 'serif' , 'monospace', 'Arial', 'Courier New', 'Microsoft YaHei'...
+                    fontSize: 15, // 文字字体大小
+                    align: "center", // 文字的水平对齐方式， 默认 自动， 可为left 、center 、right
+                    verticalAlign: "top", //文字的垂直对齐方式， 默认自动， 可为： top, middle, bottom
+                    lineHeight: 50, //行高
+                    backgroundColor: "#cccccc", // 文字块的背景色， 可以是直接的颜色值，例如：'#123234', 'red', 'rgba(0,23,11,0.3)'。
+                    borderColor: "#cccccc", // 文字块的边框颜色，
+                    borderWidth: 5, // 文字块的边框颜色， 默认： 0
+                    borderRadius: 10, // 文字块的圆角， 默认： 0
+                    padding: 0, // 文字块的内边距
+                    shadowColor: "transparent", // 文字块的背景阴影颜色
+                    shadowBlur: 0, // 文字块的阴影长度
+                    shadowOffsetX: 0, // 文字块的背景阴影X偏移
+                    shadowOffsety: 0,// 文字块的背景阴影Y偏移
+                    width: 100, // 文字块的宽度
+                    height: 40, // 文字块的高度
+                    textBorderColor: "transparent", // 文字本身的描边颜色
+                    textBorderWidth: 0, // 文字本身的描边宽度
+                    textShadowColor: "transparent", // 文字本身的阴影颜色
+                    textShadowBlur: 0, // 文字本身的阴影长度
+                    textShadowOffsetX: 0, // 文字本身的阴影X偏移
+                    textShadowOffsety: 0,// 文字本身的阴影Y偏移
+                },
+
+                // 坐标轴在 grid 区域中的分隔线。
+                splitLine: {
+                    show: true, // 是否显示x轴 刻度标签
+                    // interval: 3, // 每3个刻度线 才显示一个刻度线; 隔n个标签显示一个标签, 不设置该字段时会根据x轴的数据字段调整显示的间隔防止x轴显示混乱
+                    lineStyle: {
+                        color: ['#aaa', '#ddd'], //string, Array 刻度线的颜色, 可以为数组， 如：['#aaa', '#ddd'], 分隔线会按数组中颜色的顺序依次循环设置颜色。
+                        width: 2, // 刻度线的宽度
+                        type: 'solid', // 刻度线的种类， solid, dashed, dotted,
+                        shadowBlur: 0, // 文字块的阴影长度
+                        shadowColor: "transparent", // 文字块的背景阴影颜色
+                        shadowOffsetX: 0, // 文字块的背景阴影X偏移
+                        shadowOffsety: 0,// 文字块的背景阴影Y偏移
+                        opacity: 0.5, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                    },
+                },
+
+
+            }],
+            yAxis: [{
+                type: 'value'
+            }],
+            series: [{
+                name: '直接访问',
+                type: 'bar',
+                barWidth: '60%',
+                data: [10, 52, 200, 334, 390, 330, 220]
+            }]
+        };
+
+        myChart.setOption(option);
+    </script>
+</body>
+
+</html>

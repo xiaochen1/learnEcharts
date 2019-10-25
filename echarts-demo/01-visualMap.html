@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>visualMap</title>
+    <style>
+        #echartMap {
+            width: 800px;
+            height: 600px;
+            margin: 0 auto;
+        }
+    </style>
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="./assets/js/echarts.min.js"></script>
+</head>
+<body>
+    <div id="echartMap"></div>
+
+
+
+    <script>
+    
+    
+     // 基于准备好的dom，初始化echarts实例
+     var myChart = echarts.init(document.getElementById('echartMap'));
+     var option = {
+        visualMap: [
+             {
+                type: 'piecewise',
+                min: 0,
+                max: 1000,
+                splitNumber: 10,
+                pieces: [
+                    {min: 100, max: 300},
+                    // {min: 200, max: 400},
+                    // {min: 300, max: 500},
+                ],
+                seriesIndex: 0,
+             },
+        ],
+        xAxis: {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [125, 265, 468, 356, 678, 791, 835],
+            type: 'line'
+        }]
+     }
+
+     myChart.setOption(option);
+     
+    </script>
+</body>
+</html>
