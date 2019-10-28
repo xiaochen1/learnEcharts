@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>xAxis</title>
+    <style>
+        #echartMap {
+            width: 800px;
+            height: 600px;
+            margin: 0 auto;
+        }
+    </style>
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="./assets/js/echarts.min.js"></script>
+</head>
+<body>
+    <div id="echartMap"></div>
+
+
+
+    <script>
+    
+    
+     // 基于准备好的dom，初始化echarts实例
+     var myChart = echarts.init(document.getElementById('echartMap'));
+     var option = {
+        xAxis: {
+            id: 'dddd', // 组件 ID。默认不指定。指定则可用于在 option 或者 API 中引用组件。
+            show: true, // 是否显示x轴
+            gridIndex: 0,  // x 轴所在的 grid 的索引，默认位于第一个 grid。
+            position: 'bottom', // x 轴的位置。 top  、 bottom
+            offset: 10, // X 轴相对于默认位置的偏移，在相同的 position 上有多个 X 轴的时候有用。
+            type: 'category', // 坐标轴类型。 （1）value: 数值轴， 用于连续数据 （2）category: 类目轴， 用于离散的类目数据，此时类目的数据必须通过data来设置  （3）time: 时间轴， 使用与连续的时序数据， （4）log:  对数轴； 适用于对数数据
+            name: 'X轴/KWH', // 坐标轴名称， 可将单位加入
+            nameLocation: 'end', // 'start' / 'middle' 或者 'center'  /'end'(默认)
+            nameTextStyle: {
+                // 设置 坐标轴名称的文字样式。含 宽、 高、 背景色、 字体、大小、行高、对齐方式、边框、 阴影等
+                color: "#f00",
+                fontStyle: 'normal',  // 坐标轴名称文字字体的风格, 'normal'  / 'italic'  /'oblique'
+                fontWeight: 400, // 100, 200, 300, 400, ...   还可以是： 'normal'、 'bold' 、 'bolder' 、 'lighter'
+                fontSize: 14,  // 字体大小
+                align: 'center', // 文字水平对齐方式，默认自动。  left  、 center  、 right
+                verticalAlign: 'top' , // 文字垂直对齐方式，默认自动。 top  、  middle  、  bottom 
+                lineHeight: 40, // 行高
+                backgroundColor: "#ff0", // 背景色
+                borderColor: 'transparent', // 边框颜色
+                borderWidth: 1, // 边框 宽度
+                borderRadius: 3, // 边框  圆角
+                padding: 3, // 内边距
+                shadowColor: 'transparent', // 阴影颜色
+                shadowBlur: 2,   // 阴影模糊值
+                shadowOffsetX: 0, // 阴影 X 轴偏移量
+                shadowOffsetY: 0,  // 阴影 Y 轴偏移量
+                width: 100, // 宽
+                height: 40, // 高
+                textBorderColor: 'transparent', // 文字的描边， 文字本身的描边颜色。
+                textBorderWidth: 2, // 文字的描边， 文字本身的描边宽度。
+                textShadowColor: 'transparent',  // 文字的描边， 文字本身的阴影颜色。
+                textShadowBlur: 0, // 文字的描边， 文字本身的阴影模糊值。
+                textShadowOffsetX: 0, // 文字的描边， 文字本身的阴影 X 轴偏移量。
+                textShadowOffsetY: 0,// 文字的描边， 文字本身的阴影 Y 轴偏移量。
+            },
+
+            nameGap: 80, // 坐标轴名称与轴线之间的距离(水平)。
+            nameRotate: 10, // 坐标轴名字旋转，角度值。
+            inverse: false, // 是否是反向坐标轴。正常： 左到右；   inverse为true是从右到左
+            boundaryGap: true,  // 坐标轴两边的留白，
+            // min: 0,  //坐标轴刻度最小值。
+            // max:100, // 坐标轴刻度最大值。
+            scale: false,// 默认：false，只在数值轴中（type: 'value'）有效。
+            // splitNumber: 10,  // 坐标轴的分割段数，只是个预估值，最后实际显示的段数会在这个基础上根据分割后坐标轴刻度显示的易读程度作调整。
+            // minInterval: 1, // 自动计算的坐标轴最小间隔大小。
+            // maInterval: 10, // 自动计算的坐标轴最大间隔大小。
+            // interval: 5 , // 强制设置坐标轴分割间隔。
+            // logBase: 10, // 对数轴的底数，只在对数轴中（type: 'log'）有效。
+            silent: false, // 坐标轴是否是静态无法交互。
+            triggerEvent: false, // 坐标轴的标签是否响应和触发鼠标事件，默认不响应。
+
+            axisLine: {
+                // 坐标轴轴线相关
+                show: false,  // 是否显示坐标轴
+                onZero: true,  // 坐标轴是否从0刻度开始
+                onZeroAxisIndex: 0, // 当有双轴时，可以用这个属性手动指定，在哪个轴的 0 刻度上。
+                symbol: ['arrow', 'arrow'], // 轴线两边的箭头。末端显示箭头: ['none', 'arrow'];  两端都有箭头：['arrow', 'arrow'] 。
+            },
+
+
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [125, 265, 468, 356, 678, 791, 835],
+            type: 'bar'
+        }]
+     }
+
+     myChart.setOption(option);
+     
+    </script>
+</body>
+</html>
