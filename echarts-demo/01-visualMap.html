@@ -26,18 +26,188 @@
      // 基于准备好的dom，初始化echarts实例
      var myChart = echarts.init(document.getElementById('echartMap'));
      var option = {
+        grid: {
+            left: 150,
+            right: '10%',
+            top: 40,
+            bottom: 40,
+        },
+
+        axisPointer: {
+
+        },
+
+        /*
         visualMap: [
              {
                 type: 'piecewise',
-                min: 0,
-                max: 1000,
-                splitNumber: 10,
-                pieces: [
-                    {min: 100, max: 300},
-                    // {min: 200, max: 400},
-                    // {min: 300, max: 500},
-                ],
-                seriesIndex: 0,
+                // splitNumber: 10,
+                min: 0, //组件的最小值。
+                max: 1000, // 组件的最大值。
+                // pieces: [
+                //     {min: 100, max: 300},
+                //     {min: 200, max: 400},
+                //     {min: 300, max: 500},
+                // ],
+                // categories: ['严重污染', '重度污染', '中度污染', '轻度污染', '良', '优'],
+                // minOpen: true, // 额外多出一个『< min』的选块。
+                // maxOpen: true, // 额外多出一个『> max』的选块。
+                // selectedMode: 'multiple', // multiple / single 
+                // inverse: true, // 数据反转， 默认false，上（大数据）下（小数据）
+                // precision: 2, // 数据展示的小数精度。  
+                // itemWidth: 10,  // 图形的宽度，即每个小块的宽度。
+                // itemHeight: 30, // 图形的宽度，即每个小块的高度。
+                // align: 'auto', // 指定组件中图形（比如小方块）和文字的摆放关系，auto 、 left 、 right
+                // text: null, // 两端的文本，如： ['High', 'Low']
+                // textGap: 10,  // 两端文字主体之间的距离，单位为px。
+                // showLabel: true, // 是否显示每项的文本标签, (每个小块的范围值)。
+                // itemGap: 10, // 每两个图元之间的间隔距离，单位为px。
+                // itemSymbol: 'roundRect', // 默认的图形。可选值为： 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
+                // show: true, // 是否显示 visualMap-piecewise 组件。如果设置为 false，不会显示，但是数据映射的功能还存在。
+                // dimension: 2, //指定用数据的『哪个维度』，映射到视觉元素上。『数据』即 series.data。 可以把 series.data 理解成一个二维数组，例如：[
+                // [
+                //     [12, 23, 43],
+                //     [12, 23, 43],
+                //     [43, 545, 65],
+                //     [92, 23, 33]
+                // ],
+                // 其中每个列是一个维度，即 dimension。 例如 dimension 为 1 时，取第二列（即 23，23，545，23），映射到视觉元素上。
+                // 默认取 data 中最后一个维度。
+
+                // seriesIndex: 0, // 指定取哪个系列的数据，即哪个系列的 series.data。
+                // hoverLink: true, // 打开 hoverLink 功能时，鼠标悬浮到 visualMap 组件上时，鼠标位置对应的数值 在 图表中对应的图形元素，会高亮。
+                //                 //反之，鼠标悬浮到图表中的图形元素上时，在 visualMap 组件的相应位置会有三角提示其所对应的数值。
+
+                // 在范围之内的数据的显示效果
+                inRange: {
+                    color: ['#121122', 'rgba(3,4,5,0.4)', 'green'],
+                    symbolSize: [5, 10]
+                },
+                //在范围之外的数据的显示效果
+                outOfRange: {
+                    color: ['#121122', 'rgba(3,4,5,0.4)', 'red'],
+                    symbolSize: [10, 30]
+                },
+                // controller: {
+                    //在范围之内的数据的显示效果
+                    // inRange: {
+                    //     color: ['#121122', 'rgba(3,4,5,0.4)', 'red'],
+                    //     symbolSize: [10, 30]
+                    // },
+                    //在范围之内的数据的显示效果
+                    // outOfRange: {
+                    //     color: ['#121122', 'rgba(3,4,5,0.4)', 'red'],
+                    //     symbolSize: [10, 30]
+                    // },
+                //}, // visualMap 组件中，控制器 的 inRange outOfRange 设置。如果没有这个 controller 设置，控制器 会使用外层的 inRange outOfRange 设置；如果有这个 controller 设置，则会采用这个设置。
+                // zlevel: 0, // 所有图形的 zlevel 值。
+                // z: 4, // 组件的所有图形的z值。控制图形的前后顺序。z值小的图形会被z值大的图形覆盖。
+                // left: 'auto', // visualMap 组件离容器左侧的距离。
+                // top: 'auto', // visualMap 组件离容器上侧的距离。
+                // right: 'auto', // visualMap 组件离容器右侧的距离。
+                // bottom: 0, // visualMap 组件离容器下侧的距离。
+                // orient: 'horizontal', // 如何放置 visualMap 组件，水平（'horizontal'）或者竖直（'vertical'）。
+                // padding: 5, // visualMap-piecewise内边距，单位px，[5, 5, 5, 5] // [上, 右, 下, 左]
+                // backgroundColor: '#aaa', // 背景色。
+                // borderColor: '#000', // 边框颜色。
+                // borderWidth: 3, // 边框线宽，单位px。针对的是整个visualMap 组件
+                // color: ['#bf444c', '#d88273', '#f6efa6'],
+                // textStyle: {
+                    // color: '#0f0', // visualMap 文字的颜色。
+                    // fontStyle: 'normal', // visualMap 文字字体的风格, normal, italic , oblique
+                    // fontWeight: 'normal', // visualMap 文字字体的粗细, normal, bold, bolder, lighter, 100, 200,300,400, ...
+                    // fontFamily: 'sans-serif', // visualMap 文字的字体系列; 还可以是 'serif' , 'monospace', 'Arial', 'Courier New', 'Microsoft YaHei', ...
+                    // fontSize: 12, // visualMap 文字的字体大小
+                    // lineHeight: 30, // 行高。
+                    // width: 20, // 文字块的宽度。
+                    // height: 30, // 文字块的高度。
+                    // textBorderColor: 'transparent', // 文字本身的描边颜色。
+                    // textBorderWidth: 0, // 文字本身的描边宽度。
+                    // textShadowColor: 'transparent', // 文字本身的阴影颜色。
+                    // textShadowBlur: 0, // 文字本身的阴影长度。
+                    // textShadowOffsetX: 0, // 文字本身的阴影 X 偏移。
+                    // textShadowOffsetY: 0, // 文字本身的阴影 Y 偏移。
+                // },
+                // formatter: '',
+            },
+        ],
+        */
+
+        visualMap: [
+             {
+                type: 'continuous', // 类型为连续型。
+                min: 0, // 最小值。
+                max: 1000, // 最大值。
+                range: [0, 1000], // 两个手柄对应的数值是 4 和 15
+                calculabel: true, // 是否显示拖拽用的手柄（手柄能拖拽调整选中范围）。
+                realtime: true, // 拖拽时，是否实时更新。
+                inverse: false, // 是否反转 visualMap 组件。orient 为'vertical'时，数据上大下小。orient 为'horizontal'时，数据右大左小。
+                precision: 0, // 数据展示的小数精度，默认为0，无小数点。
+                // itemWidth: 20, // 图形的宽度，即长条的宽度。
+                // itemHeight: 300, // 图形的高度，即长条的高度。
+                align:'auto', // 指定组件中手柄和文字的摆放位置，可选值为：left 、right 、 top 、 bottom 
+                text: ['High', 'Low'], // 两端的文本，
+                textGap: 10, // 两端文字主体(组件)之间的距离，单位为px。
+                show: true, // 是否显示 visualMap-continuous 组件。
+                // dimension:[
+                //     [12, 23, 43],
+                //     [12, 23, 43],
+                //     [43, 545, 65],
+                //     [92, 23, 33]
+                // ],
+                // seriesIndex: 0, // 指定取哪个系列的数据，即哪个系列的 series.data。默认取所有系列。
+                // hoverLink: true, // 打开 hoverLink 功能时，鼠标悬浮到 visualMap 组件上时，鼠标位置对应的数值 在 图表中对应的图形元素，会高亮。
+                // 在范围之内的数据的显示效果
+                // inRange: {
+                //     color: ['#121122', 'rgba(3,4,5,0.4)', 'green'],
+                //     symbolSize: [5, 10]
+                // },
+                // //在范围之外的数据的显示效果
+                // outOfRange: {
+                //     color: ['#121122', 'rgba(3,4,5,0.4)', 'red'],
+                //     symbolSize: [10, 30]
+                // },
+                // controller: {
+                    //在范围之内的数据的显示效果
+                    // inRange: {
+                    //     color: ['#121122', 'rgba(3,4,5,0.4)', 'red'],
+                    //     symbolSize: [10, 30]
+                    // },
+                    //在范围之内的数据的显示效果
+                    // outOfRange: {
+                    //     color: ['#121122', 'rgba(3,4,5,0.4)', 'red'],
+                    //     symbolSize: [10, 30]
+                    // },
+                //}, // visualMap 组件中，控制器 的 inRange outOfRange 设置。如果没有这个 controller 设置，控制器 会使用外层的 inRange outOfRange 设置；如果有这个 controller 设置，则会采用这个设置。
+                // zlevel: 0, // 所有图形的 zlevel 值。
+                // z: 4, // 组件的所有图形的z值。控制图形的前后顺序。z值小的图形会被z值大的图形覆盖。
+                // left: 0,  // visualMap 组件离容器 左 侧的距离。
+                // top: 'auto', // visualMap 组件离容器 上 侧的距离。
+                // right: 'auto', // visualMap 组件离容器  右 侧的距离。
+                // bottom: 0, // visualMap 组件离容器  下 侧的距离。
+                // orient: 'vertical', // 如何放置 visualMap 组件，水平（'horizontal'）或者竖直（'vertical'）。
+                // padding: 5, // visualMap-continuous内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距。
+                // backgroundColor: '#aaa', // 背景色。
+                // borderColor: '#ccc', // 边框颜色。
+                // borderWidth: 1, // 边框线宽，单位px。
+                // color: ['#bf444c', '#d88273', '#f6efa6'], // 兼容 ECharts2 而存在，ECharts3 中已经不推荐使用。它的功能已经移到了 visualMap-continuous.inRange 和 visualMap-continuous.outOfRange 中。
+                // textStyle: {
+                    // color: '#333',  // visualMap 文字的颜色。
+                    // fontStyle: 'normal', // visualMap 文字字体的风格 ; normal 、italic 、oblique
+                    // fontWeight: 'normal', // visualMap 文字字体的粗细; normal、 bold 、 bolder 、lighter
+                    // fontFamily: 'sans-serif', // visualMap 文字的字体系列；还可以是 'serif' , 'monospace', 'Arial', 'Courier New', 'Microsoft YaHei', ...
+                    // fontSize: 12, // visualMap 文字的字体大小
+                    // lineHeight: 30, // 行高。
+                    // width: 20, // 文字块的宽度。一般不用指定，不指定则自动是文字的宽度。
+                    // height: 30, // 文字块的高度。一般不用指定，不指定则自动是文字的高度。
+                    // textBorderColor: 'transparent', // 文字本身的描边颜色。
+                    // textBorderWidth: 0, // 文字本身的描边宽度。
+                    // textShadowColor: 'transparent', // 文字本身的阴影颜色。
+                    // textShadowBlur: 0, // 文字本身的阴影长度。
+                    // textShadowOffsetX: 0, // 文字本身的阴影 X 偏移。
+                    // textShadowOffsetY: 0, // 文字本身的阴影 Y 偏移。
+                // },
+                // formatter: '',
              },
         ],
         xAxis: {

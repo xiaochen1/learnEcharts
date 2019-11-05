@@ -1,0 +1,19 @@
+
+
+/* 超出部分省略号显示 */
+.container {
+    white-space: nowrap;/*强制文本不换行*/
+    text-overflow:ellipsis; /*溢出文本以省略号显示;  clip: 直接裁剪溢出的文本, 无省略号；ellipsis： 文本溢出，显示省略号（...）标记，省略标记代替最后一个字符；  ellipsis-word:同ellipsis相同，不同在于省略标记代替最后一个词。*/ 
+    overflow: hidden; /*超出部分隐藏*/
+}
+
+
+
+
+/* 超出 n  行 省略号显示 */
+.container {
+    display: -webkit-box;/*对象作为弹性伸缩盒子模型显示 。*/
+    -webkit-box-clamp: 2;/* 限制在一个块元素显示的文本的行数 N   */
+    -webkit-box-orient: horizontal;/* //设置框内子元素的排列方式。取值： horizontal、 vertical*/
+    overflow:hidden; 
+}

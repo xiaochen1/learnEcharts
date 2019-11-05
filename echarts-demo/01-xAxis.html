@@ -29,26 +29,27 @@
         xAxis: {
             id: 'dddd', // 组件 ID。默认不指定。指定则可用于在 option 或者 API 中引用组件。
             show: true, // 是否显示x轴
-            gridIndex: 0,  // x 轴所在的 grid 的索引，默认位于第一个 grid。
+            // gridIndex: 0,  // x 轴所在的 grid 的索引，默认位于第一个 grid。
             // position: 'bottom', // x 轴的位置。 top  、 bottom
-            // offset: 10, // X 轴相对于默认位置的偏移，在相同的 position 上有多个 X 轴的时候有用。
+            // offset: 0, // X 轴相对于默认位置的偏移，在相同的 position 上有多个 X 轴的时候有用。
             type: 'category', // 坐标轴类型。 （1）value: 数值轴， 用于连续数据 （2）category: 类目轴， 用于离散的类目数据，此时类目的数据必须通过data来设置  （3）time: 时间轴， 使用与连续的时序数据， （4）log:  对数轴； 适用于对数数据
-            // name: 'X轴/KWH', // 坐标轴名称， 可将单位加入
-            // nameLocation: 'end', // 'start' / 'middle' 或者 'center'  /'end'(默认)
-            // nameTextStyle: {
-                // 设置 坐标轴名称的文字样式。含 宽、 高、 背景色、 字体、大小、行高、对齐方式、边框、 阴影等
-                // color: "#f00",
-                // fontStyle: 'normal',  // 坐标轴名称文字字体的风格, 'normal'  / 'italic'  /'oblique'
-                // fontWeight: 400, // 100, 200, 300, 400, ...   还可以是： 'normal'、 'bold' 、 'bolder' 、 'lighter'
-                // fontSize: 14,  // 字体大小
-                // align: 'center', // 文字水平对齐方式，默认自动。  left  、 center  、 right
-                // verticalAlign: 'top' , // 文字垂直对齐方式，默认自动。 top  、  middle  、  bottom 
-                // lineHeight: 40, // 行高
-                // backgroundColor: "transparent", // 背景色
-                // borderColor: 'transparent', // 边框颜色
-                // borderWidth: 1, // 边框 宽度
-                // borderRadius: 3, // 边框  圆角
-                // padding: 3, // 内边距
+            name: 'X轴/KWH', // 坐标轴名称， 可将单位加入
+            nameLocation: 'end', // 'start' / 'middle' 或者 'center'  /'end'(默认)
+
+            // 设置 坐标轴名称的文字样式。含 宽、 高、 背景色、 字体、大小、行高、对齐方式、边框、 阴影等
+            nameTextStyle: {
+                color: "#f00",
+                fontStyle: 'normal',  // 坐标轴名称文字字体的风格, 'normal'  / 'italic'  /'oblique'
+                fontWeight: 700, // 100, 200, 300, 400, ...   还可以是： 'normal'、 'bold' 、 'bolder' 、 'lighter'
+                fontSize: 16,  // 字体大小
+                // align: 'right', // 文字水平对齐方式，默认自动。  left  、 center  、 right
+                verticalAlign: 'top' , // 文字垂直对齐方式，默认自动。 top  、  middle  、  bottom 
+                lineHeight: 40, // 行高
+                backgroundColor: "#ccc", // 背景色
+                borderColor: 'red', // 边框颜色
+                borderWidth: 1, // 边框 宽度
+                borderRadius: 20, // 边框  圆角
+                padding: 3, // 内边距
                 // shadowColor: 'transparent', // 阴影颜色
                 // shadowBlur: 2,   // 阴影模糊值
                 // shadowOffsetX: 0, // 阴影 X 轴偏移量
@@ -61,52 +62,53 @@
                 // textShadowBlur: 0, // 文字的描边， 文字本身的阴影模糊值。
                 // textShadowOffsetX: 0, // 文字的描边， 文字本身的阴影 X 轴偏移量。
                 // textShadowOffsetY: 0,// 文字的描边， 文字本身的阴影 Y 轴偏移量。
-            // },
+            },
 
-            // nameGap: 0, // 坐标轴名称与轴线之间的距离(水平)。
-            // nameRotate: 10, // 坐标轴名字旋转，角度值。
-            // inverse: false, // 是否是反向坐标轴。正常： 左到右；   inverse为true是从右到左
-            boundaryGap: true,  // 坐标轴两边的留白，
+            nameGap: 10, // 坐标轴名称与轴线之间的距离(水平)。
+            nameRotate: 20, // 坐标轴名字旋转，角度值。(逆时针转动)
+            inverse: false, // 是否是反向坐标轴。正常： 左到右；   inverse为true是从右到左
+            boundaryGap: true,  // 坐标轴两边的留白， true 、   ['20%', '20%'] 类目轴中 boundaryGap 可以配置为 true 和 false。默认为 true，这时候刻度只是作为分隔线，标签和数据点都会在两个刻度之间的带(band)中间。非类目轴，包括时间，数值，对数轴，boundaryGap是一个两个值的数组，分别表示数据最小值和最大值的延伸范围，可以直接设置数值或者相对的百分比，在设置 min 和 max 后无效。
             // min: 0,  //坐标轴刻度最小值。
             // max:100, // 坐标轴刻度最大值。
-            // scale: false,// 默认：false，只在数值轴中（type: 'value'）有效。
+            // scale: false,// 默认：false，只在数值轴中（type: 'value'）有效。在设置 min 和 max 之后该配置项无效。
             // splitNumber: 10,  // 坐标轴的分割段数，只是个预估值，最后实际显示的段数会在这个基础上根据分割后坐标轴刻度显示的易读程度作调整。
-            // minInterval: 1, // 自动计算的坐标轴最小间隔大小。
+            // minInterval: 20, // 自动计算的坐标轴最小间隔大小。
             // maInterval: 10, // 自动计算的坐标轴最大间隔大小。
-            // interval: 5 , // 强制设置坐标轴分割间隔。
+            // interval: 10 , // 强制设置坐标轴分割间隔。
             // logBase: 10, // 对数轴的底数，只在对数轴中（type: 'log'）有效。
             // silent: false, // 坐标轴是否是静态无法交互。
-            // triggerEvent: false, // 坐标轴的标签是否响应和触发鼠标事件，默认不响应。
+            triggerEvent: false, // 坐标轴的标签是否响应和触发鼠标事件，默认不响应。
 
-            // axisLine: {
-                // 坐标轴轴线相关
-                // show: true,  // 是否显示坐标轴
+            // 坐标轴轴线相关
+            axisLine: {
+                show: true,  // 是否显示坐标轴
                 // onZero: true,  // 坐标轴是否从0刻度开始
                 // // onZeroAxisIndex: 0, // 当有双轴时，可以用这个属性手动指定，在哪个轴的 0 刻度上。
-                // symbol: ['none', 'arrow'], // 轴线两边的箭头。末端显示箭头: ['none', 'arrow'];  两端都有箭头：['arrow', 'arrow'] 。
-                // symbolSize: [10, 10],
+                symbol: ['none', 'arrow'], // 轴线两边的箭头。末端显示箭头: ['none', 'arrow'];  两端都有箭头：['arrow', 'arrow'] 。
+                symbolSize: [6, 6],
                 // symbolOffset: 10, // [5, 5] 轴线两边的箭头的偏移
-            // },
+            },
 
-            // axisTick: {
-                // show: true, // 是否显示坐标轴刻度。
-                // alignWithLabel: true, // 类目轴中在 boundaryGap 为 true 的时候有效，可以保证刻度线和标签对齐。
+            // 坐标轴刻度相关设置。
+            axisTick: {
+                show: true, // 是否显示坐标轴刻度。
+                alignWithLabel: true, // 类目轴中在 boundaryGap 为 true 的时候有效，可以保证刻度线和标签对齐。
                 // interval: 'auto', // 坐标轴刻度的显示间隔，在类目轴中有效。
                 // inside: false, // 坐标轴刻度是否朝内，默认朝外。
-                // length: 5, // 坐标轴刻度的长度。
-                // lineStyle: {
-                //     color: '#f00', //刻度线的颜色，默认取 axisLine.lineStyle.color。
-                //     width: 1, // 坐标轴刻度线宽。
-                //     type: 'solid',// 坐标轴刻度线的类型。  solid 、dashed 、 dotted
-                //     shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
-                //     shadowColor: '#f00', // 阴影颜色。
-                //     shadowOffsetX: 1, // 阴影水平方向上的偏移距离。
-                //     shadowOffsetY: 1, // 阴影垂直方向上的偏移距离。
-                // },
-            // },
+                length: 5, // 坐标轴刻度的长度。
+                lineStyle: {
+                    color: '#f00', //刻度线的颜色，默认取 axisLine.lineStyle.color。
+                    width: 1, // 坐标轴刻度线宽。
+                    type: 'solid',// 坐标轴刻度线的类型。  solid 、dashed 、 dotted
+                    shadowBlur: 2, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                    shadowColor: '#ff0', // 阴影颜色。
+                    shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                    shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                },
+            },
 
+            // 坐标轴刻度标签的相关设置。
             axisLabel: {
-                // 坐标轴刻度标签的相关设置。
                 show: true, // 是否显示刻度标签。
                 interval: 2, // 坐标轴刻度标签的显示间隔，在类目轴中有效。每n个显示一个标签刻度
                 inside: false, // 刻度标签是否朝内，默认朝外。
@@ -116,35 +118,35 @@
                 // showMinLabel: null, // 是否显示最小 tick 的 label。可取值 true, false, null。默认自动判定（即如果标签重叠，不会显示最小 tick 的 label）。
                 // showMaxLabel: null, // 是否显示最大 tick 的 label。可取值 true, false, null。默认自动判定（即如果标签重叠，不会显示最大 tick 的 label）。
                 color: '#f00', // 刻度标签文字的颜色，
-                fontStyle: 'normal', // 文字字体的风格  normal   italic   oblique
-                fontWeight: 'normal', // 100 、200、 300, ...    normal  、  bold 、 bolder、  lighter 
+                // fontStyle: 'normal', // 文字字体的风格  normal   italic   oblique
+                // fontWeight: 'normal', // 100 、200、 300, ...    normal  、  bold 、 bolder、  lighter 
                 // fontFamily: 'sans-serif',
                 fontSize: 20,
                 align: 'right', // 文字水平对齐方式，默认自动。 left  center right
-                // verticalAlign: 'top', //文字垂直对齐方式，默认自动。 top、  middle、  bottom
-                // lineHeight: 30, // 行高。
-                // backgroundColor: '#aaa', // 文字块背景色。
-                // borderColor: 'transparent',
-                // borderWidth: 0,
-                // borderRadius: 0,
-                // padding: 0,
-                // shadowColor: 'transparent',
-                // shadowBlur: 0,
-                // shadowOffsetX: 0,
-                // shadowOffsetY: 0,
-                // width: 100,
-                // height: 30,
-                // textBorderColor: 'transparent',
-                // textBorderWidth: 0,
-                // textShadowColor: 'transparent',
-                // textShadowBlur: 0,
-                // textShadowOffsetX: 0,
-                // textShadowOffsetY: 0,
+                verticalAlign: 'top', //文字垂直对齐方式，默认自动。 top、  middle、  bottom
+                lineHeight: 30, // 行高。
+                backgroundColor: '#aaa', // 文字块背景色。
+                borderColor: '#000', // 文字块边框颜色。
+                // borderWidth: 0, // 文字块边框宽度。
+                // borderRadius: 0, // 文字块的圆角。
+                // padding: 0, // 文字块的内边距。
+                // shadowColor: 'transparent', // 文字块的背景阴影颜色。
+                // shadowBlur: 0, // 文字块的背景阴影长度。
+                // shadowOffsetX: 0, // 文字块的背景阴影 X 偏移。
+                // shadowOffsetY: 0, // 文字块的背景阴影 Y 偏移
+                // width: 100, // 文字块的宽度。
+                // height: 30, // 文字块的高度。
+                // textBorderColor: 'transparent', // 文字本身的描边颜色。
+                // textBorderWidth: 0, // 文字本身的描边宽度。
+                // textShadowColor: 'transparent', // 文字本身的阴影颜色。
+                // textShadowBlur: 0, // 文字本身的阴影长度。
+                // textShadowOffsetX: 0, // 文字本身的阴影 X 偏移。
+                // textShadowOffsetY: 0, // 文字本身的阴影 Y 偏移。
             },
 
-            // splitLine: {
-                // 坐标轴在 grid 区域中的分隔线。
-                // show: true, // 是否显示分隔线。默认数值轴显示，类目轴不显示。
+            // 坐标轴在 grid 区域中的分隔线。
+            splitLine: {
+                // show: false, // 是否显示分隔线。默认数值轴显示，类目轴不显示。
                 // interval: 'auto', // 坐标轴分隔线的显示间隔，在类目轴中有效。
                 // lineStyle: {
                 //     color: ['#ccc'], // 分隔线颜色，可以设置成单个颜色。 ['#aaa', '#ddd']
@@ -156,21 +158,88 @@
                 //     shadowOffsetY: 1, // 阴影垂直方向上的偏移距离。
                 //     opacity: .5, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
                 // },
-            // },
+            },
 
-            // splitArea: {
+            splitArea: {
                 // 坐标轴在 grid 区域中的分隔区域，默认不显示。
                 // interval: 'auto',  // 坐标轴分隔区域的显示间隔，在类目轴中有效。
                 // show: false,
                 // areaStyle: {
                 //     color: ['#ccc'], // 分隔线颜色，可以设置成单个颜色。 ['#aaa', '#ddd']
-                //     shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                //     shadowBlur: 10, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
                 //     shadowColor: '#f00', // 阴影颜色。
-                //     shadowOffsetX: 1, // 阴影水平方向上的偏移距离。
-                //     shadowOffsetY: 1, // 阴影垂直方向上的偏移距离。
+                //     shadowOffsetX: 10, // 阴影水平方向上的偏移距离。
+                //     shadowOffsetY: 10, // 阴影垂直方向上的偏移距离。
                 //     opacity: .5, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
                 // },
-            // },
+            },
+
+            axisPointer: {
+                // show: true,
+                // type: 'line', // 指示器类型。 line 、 shadow 、 none
+                // snap: true, // 坐标轴指示器是否自动吸附到点上。默认自动判断。可以自动寻找细小的数值点。
+                // z: 10, // 坐标轴指示器的 z 值。控制图形的前后顺序。z值小的图形会被z值大的图形覆盖。
+
+                // 坐标轴指示器的文本标签。
+                label: {
+                    // show: true, // 是否显示文本标签。如果 tooltip.axisPointer.type 设置为 'cross' 则默认显示标签，否则默认不显示。
+                    // precision: 'auto', // 文本标签中数值的小数点精度。默认根据当前轴的值自动判断。也可以指定如 2 表示保留两位小数。
+                    // formatter: '',
+                    // margin: 3, // label 距离轴的距离。
+                    // color: '#fff', // 文字的颜色。
+                    // fontStyle: 'normal', // 文字字体的风格 , normal  、 italic 、oblique
+                    // fontWeight: 400, //文字字体的粗细, normal, bold, bolder, lighter
+                    // fontWeight: 'sans-serif',//文字的字体系列; 还可以是 'serif' , 'monospace', 'Arial', 'Courier New', 'Microsoft YaHei', ...
+                    // fontSize: 12, // 文字的字体大小
+                    // lineHeight: 30, // 行高。
+                    // width: 100, // 文字块的宽度。不指定则自动是文字的宽度。
+                    // height: 30, // 文字块的高度。不指定则自动是文字的高度。
+                    // textBorderColor: 'transparent', // 文字本身的描边颜色。
+                    // textBorderWidth: 0, // 文字本身的描边宽度。
+                    // textShadowColor: 'transparent', // 文字本身的阴影颜色。
+                    // textShadowBlur: 0, // 文字本身的阴影长度。
+                    // textShadowOffsetX: 0, // 文字本身的阴影 X 偏移。
+                    // textShadowOffsetY: 0, // 文字本身的阴影 Y 偏移。
+                },
+                lineStyle: {
+                    // color: '#555', // 线的颜色。
+                    // width: 1, // 线宽。
+                    // type: 'solid', // 线的类型。 solid , dashed, dotted
+                    // shadowBlur: 1, // 图形阴影的模糊大小。
+                    // shadowColor: '#aaa', // 阴影颜色。
+                    // shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                    // shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                    // opacity: 0.5,
+                },
+                shadowStyle: {
+                    // color: '#555', // 填充的颜色。
+                    // shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                    // shadowColor: '#aaa', // 阴影颜色。
+                    // shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                    // shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                    // opacity: 0.5, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                },
+                // triggerTooltip: true, // 是否触发 tooltip。如果不想触发 tooltip 可以关掉。
+                // value: null, // 当前的 value。在使用 axisPointer.handle 时，可以设置此值进行初始值设定，从而决定 axisPointer 的初始位置。
+                // status: 'show', // 当前的状态，可取值为 'show' 和 'hide'。
+
+                // 拖拽手柄，适用于触屏的环境。
+                handle: {
+                    // show: true, // 当 show 设为 true 时开启，这时显示手柄，并且 axisPointer 会一直显示。
+                    // icon: '', // 手柄的图标。可以通过 'image://url' 设置为图片，其中 URL 为图片的链接，或者 dataURI。可以通过 'path://' 将图标设置为任意的矢量路径。
+                    // size: 45, // 手柄的尺寸，可以设置单值，如 45，也可以设置为数组：[width, height]。
+                    // margin: 50, // 手柄与轴的距离。注意，这是手柄中心点和轴的距离。
+                    // color: '#333', // 手柄颜色。
+                    // throttle:30, // 手柄拖拽时触发视图更新周期，单位毫秒，调大这个数值可以改善性能，但是降低体验。
+                    // shadowBlur: 10, // 图形阴影的模糊大小。
+                    // shadowColor: '#aaa', // 阴影颜色。
+                    // shadowOffsetX: 2, // 阴影水平方向上的偏移距离。
+                    // shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                },
+
+            },
+            zlevel: 0, //X 轴所有图形的 zlevel 值。zlevel用于 Canvas 分层，不同zlevel值的图形会放置在不同的 Canvas 中，
+            z: 0, // X 轴组件的所有图形的z值。控制图形的前后顺序。z值小的图形会被z值大的图形覆盖。
 
             // data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
             data: ["2019-10-25 15:00:00", "2019-10-25 16:00:00", "2019-10-25 17:00:00", "2019-10-25 18:00:00", "2019-10-25 19:00:00", "2019-10-25 20:00:00", "2019-10-25 21:00:00", "2019-10-25 22:00:00" ]

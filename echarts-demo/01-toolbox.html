@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>toolbox工具栏</title>
+    <style>
+        #echartMap {
+            width: 800px;
+            height: 600px;
+            margin: 0 auto;
+        }
+    </style>
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="./assets/js/echarts.min.js"></script>
+</head>
+
+<body>
+    <div id="echartMap"></div>
+
+    <script>
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echartMap'));
+        var option = {
+            title: {
+                text: '未来一周气温变化',
+                subtext: '纯属虚构'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['最高气温', '最低气温']
+            },
+            toolbox: {
+                show: true,
+                orient: 'horizontal',
+                itemSize: 15,
+                itemGap: 10,
+                showTitle: true,
+                
+                feature: {
+                    
+                    // 保存为图片。
+                    saveAsImage: {
+                        type: 'png', // 保存的图片格式。支持 'png' 和 'jpeg'。
+                        name: 'auto', // 保存的文件名称，默认使用 title.text 作为名称。
+                        backgroundColor: 'auto', // 保存的图片背景色，默认使用 backgroundColor，如果backgroundColor不存在的话会取白色。
+                        connectedBackgroundColor: '#fff', // 如果图表使用了 echarts.connect 对多个图表进行联动，则在导出图片时会导出这些联动的图表。该配置项决定了图表与图表之间间隙处的填充色。
+                        excludeComponents: ['toolbox'], // 保存为图片时忽略的组件列表，默认忽略工具栏。
+                        show: true, // 是否显示该工具。
+                        title: '保存为图片', // 
+                        // icon: 'image://data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7', // 可以通过 'image://url' 设置为图片，其中 URL 为图片的链接，或者 dataURI。URL 为图片链接例如：'image://http://xxx.xxx.xxx/a/b.png'
+
+                        // 保存为图片 icon 样式设置。由于 icon 的文本信息只在 icon hover 时候才显示，所以文字相关的配置项请在 emphasis 下设置。
+                        iconStyle: {
+                            color: 'auto', // 图形的颜色。
+                            borderColor: '#666', // 图形的描边颜色。支持的颜色格式同 color，不支持回调函数。
+                            borderWidth: 1,  // 描边线宽。为 0 时无描边。
+                            borderType: 'solid', // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+                            shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                            shadowColor: '#0f0', // 阴影颜色。支持的格式同color。
+                            shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                            shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                        },
+                        emphasis: {
+                            iconStyle: {
+                                color: 'auto', // 图形的颜色。
+                                borderColor: '#666', // 图形的描边颜色。支持的颜色格式同 color，不支持回调函数。
+                                borderWidth: 1,  // 描边线宽。为 0 时无描边。
+                                borderType: 'solid', // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+                                shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                                shadowColor: '#0f0', // 阴影颜色。支持的格式同color。
+                                shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                                shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                                opacity: .5, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                                textPosition: 'bottom', // 文本位置，'left' / 'right' / 'top' / 'bottom'。
+                                textFill: '#000', // 文本颜色，如果未设定，则依次取图标 emphasis 时候的填充色、描边色，如果都不存在，则为 '#000'。
+                                textAlign: 'center', // 文本对齐方式，'left' / 'center' / 'right'。
+                                textBackgroundColor: 'auto', // 文本区域填充色。
+                                textBorderRadius: 1, // 文本区域圆角大小。
+                                textPadding: 3, // 文本区域内边距。
+                            },
+                        },
+                        pixelRatio: 1, // 保存图片的分辨率比例，默认跟容器相同大小，如果需要保存更高分辨率的，可以设置为大于 1 的值，例如 2
+                    },
+
+                    // 配置项还原。
+                    restore: {
+                        show: true,
+                        title: '还原配置项',
+                        // icon: '', // 可以通过 'image://url' 设置为图片，其中 URL 为图片的链接，或者 dataURI。URL 为图片链接例如：'image://http://xxx.xxx.xxx/a/b.png'
+
+                        // 保存为图片 icon 样式设置。由于 icon 的文本信息只在 icon hover 时候才显示，所以文字相关的配置项请在 emphasis 下设置。
+                        iconStyle: {
+                            color: 'auto', // 图形的颜色。
+                            borderColor: '#666', // 图形的描边颜色。支持的颜色格式同 color，不支持回调函数。
+                            borderWidth: 1,  // 描边线宽。为 0 时无描边。
+                            borderType: 'solid', // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+                            shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                            shadowColor: '#0f0', // 阴影颜色。支持的格式同color。
+                            shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                            shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                        },
+                        emphasis: {
+                            iconStyle: {
+                                color: 'auto', // 图形的颜色。
+                                borderColor: '#666', // 图形的描边颜色。支持的颜色格式同 color，不支持回调函数。
+                                borderWidth: 1,  // 描边线宽。为 0 时无描边。
+                                borderType: 'solid', // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+                                shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                                shadowColor: '#0f0', // 阴影颜色。支持的格式同color。
+                                shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                                shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                                opacity: .5, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                                textPosition: 'bottom', // 文本位置，'left' / 'right' / 'top' / 'bottom'。
+                                textFill: '#000', // 文本颜色，如果未设定，则依次取图标 emphasis 时候的填充色、描边色，如果都不存在，则为 '#000'。
+                                textAlign: 'center', // 文本对齐方式，'left' / 'center' / 'right'。
+                                textBackgroundColor: 'auto', // 文本区域填充色。
+                                textBorderRadius: 1, // 文本区域圆角大小。
+                                textPadding: 3, // 文本区域内边距。
+                            },
+                        },
+
+                    },
+
+                    // 数据视图工具，可以展现当前图表所用的数据，编辑后可以动态更新。
+                    dataView: {
+                        show: true,
+                        title: '还原配置项',
+                        // icon: '', // 可以通过 'image://url' 设置为图片，其中 URL 为图片的链接，或者 dataURI。URL 为图片链接例如：'image://http://xxx.xxx.xxx/a/b.png'
+
+                        // 保存为图片 icon 样式设置。由于 icon 的文本信息只在 icon hover 时候才显示，所以文字相关的配置项请在 emphasis 下设置。
+                        iconStyle: {
+                            color: 'auto', // 图形的颜色。
+                            borderColor: '#666', // 图形的描边颜色。支持的颜色格式同 color，不支持回调函数。
+                            borderWidth: 1,  // 描边线宽。为 0 时无描边。
+                            borderType: 'solid', // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+                            shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                            shadowColor: '#0f0', // 阴影颜色。支持的格式同color。
+                            shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                            shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                        },
+                        emphasis: {
+                            iconStyle: {
+                                color: 'auto', // 图形的颜色。
+                                borderColor: '#666', // 图形的描边颜色。支持的颜色格式同 color，不支持回调函数。
+                                borderWidth: 1,  // 描边线宽。为 0 时无描边。
+                                borderType: 'solid', // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+                                shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                                shadowColor: '#0f0', // 阴影颜色。支持的格式同color。
+                                shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                                shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                                opacity: .5, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                                textPosition: 'bottom', // 文本位置，'left' / 'right' / 'top' / 'bottom'。
+                                textFill: '#000', // 文本颜色，如果未设定，则依次取图标 emphasis 时候的填充色、描边色，如果都不存在，则为 '#000'。
+                                textAlign: 'center', // 文本对齐方式，'left' / 'center' / 'right'。
+                                textBackgroundColor: 'auto', // 文本区域填充色。
+                                textBorderRadius: 1, // 文本区域圆角大小。
+                                textPadding: 3, // 文本区域内边距。
+                            },
+                        },
+                        readOnly: false, // 是否不可编辑（只读）。
+                        optionToContent: function() {},
+                        contentToOption: function() {},
+                        lang: ['数据视图', '关闭', '刷新'],
+                        backgroundColor: '#fff',
+                        textareaColor: '#fff',
+                        textareaBorderColor: '#333',
+                        textColor: '#000',
+                        buttonColor: '#c23531',
+                        buttonTextColor: '#fff',
+                    },
+
+                    // 数据区域缩放。目前只支持直角坐标系的缩放。
+                    dataZoom: {
+                        show: true,
+                        title: {
+                            zoom: '区域缩放',
+                            back: '区域缩放还原',
+                        },
+                        // icon: {
+                        //     zoom: '', // 可以通过 'image://url' 设置为图片，其中 URL 为图片的链接，或者 dataURI。URL 为图片链接例如：'image://http://xxx.xxx.xxx/a/b.png'
+                        //     back: '', // 可以通过 'image://url' 设置为图片，其中 URL 为图片的链接，或者 dataURI。URL 为图片链接例如：'image://http://xxx.xxx.xxx/a/b.png'
+                        // },
+
+                        // 保存为图片 icon 样式设置。由于 icon 的文本信息只在 icon hover 时候才显示，所以文字相关的配置项请在 emphasis 下设置。
+                        iconStyle: {
+                            color: 'auto', // 图形的颜色。
+                            borderColor: '#666', // 图形的描边颜色。支持的颜色格式同 color，不支持回调函数。
+                            borderWidth: 1,  // 描边线宽。为 0 时无描边。
+                            borderType: 'solid', // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+                            shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                            shadowColor: '#0f0', // 阴影颜色。支持的格式同color。
+                            shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                            shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                        },
+
+                        emphasis: {
+                            iconStyle: {
+                                color: 'auto', // 图形的颜色。
+                                borderColor: '#666', // 图形的描边颜色。支持的颜色格式同 color，不支持回调函数。
+                                borderWidth: 1,  // 描边线宽。为 0 时无描边。
+                                borderType: 'solid', // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+                                shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                                shadowColor: '#0f0', // 阴影颜色。支持的格式同color。
+                                shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                                shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                                opacity: .5, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                                textPosition: 'bottom', // 文本位置，'left' / 'right' / 'top' / 'bottom'。
+                                textFill: '#000', // 文本颜色，如果未设定，则依次取图标 emphasis 时候的填充色、描边色，如果都不存在，则为 '#000'。
+                                textAlign: 'center', // 文本对齐方式，'left' / 'center' / 'right'。
+                                textBackgroundColor: 'auto', // 文本区域填充色。
+                                textBorderRadius: 1, // 文本区域圆角大小。
+                                textPadding: 3, // 文本区域内边距。
+                            },
+                        },
+
+                        xAxisIndex: 'none', // 指定哪些 xAxis 被控制。如果缺省则控制所有的x轴。如果设置为 false 则不控制任何 x 轴。如果设置成 3 则控制 axisIndex 为 3 的 x 轴。如果设置为 [0, 3] 则控制 axisIndex 为 0 和 3 的 x 轴。
+                        yAxisIndex: 'none', // 指定哪些 xAxis 被控制。如果缺省则控制所有的x轴。如果设置为 false 则不控制任何 y 轴。如果设置成 3 则控制 axisIndex 为 3 的 y 轴。如果设置为 [0, 3] 则控制 axisIndex 为 0 和 3 的 y 轴。
+                    },
+
+                    // 动态类型切换
+                    magicType: {
+                        show: true, // 是否显示该工具。
+                        type: ['line', 'bar', 'stack', 'tiled'] , // 启用的动态类型，包括'line'（切换为折线图）, 'bar'（切换为柱状图）, 'stack'（切换为堆叠模式）, 'tiled'（切换为平铺模式）。
+                        
+                        title: {
+                            line: '切换为折线图',
+                            bar: '切换为柱状图',
+                            stack: '切换为堆叠图',
+                            tiled: '切换为平铺图',
+                        },
+
+                        // icon: {
+                        //     // line: '', //  可以通过 'image://url' 设置为图片，其中 URL 为图片的链接，或者 dataURI。URL 为图片链接例如：'image://http://xxx.xxx.xxx/a/b.png'
+                        //     // bar: '', //  可以通过 'image://url' 设置为图片，其中 URL 为图片的链接，或者 dataURI。URL 为图片链接例如：'image://http://xxx.xxx.xxx/a/b.png'
+                        //     // stack: '', //  可以通过 'image://url' 设置为图片，其中 URL 为图片的链接，或者 dataURI。URL 为图片链接例如：'image://http://xxx.xxx.xxx/a/b.png'
+                        //     // tiled: '', //  可以通过 'image://url' 设置为图片，其中 URL 为图片的链接，或者 dataURI。URL 为图片链接例如：'image://http://xxx.xxx.xxx/a/b.png'
+                        // },
+
+                        // 保存为图片 icon 样式设置。由于 icon 的文本信息只在 icon hover 时候才显示，所以文字相关的配置项请在 emphasis 下设置。
+                        iconStyle: {
+                            color: 'auto', // 图形的颜色。
+                            borderColor: '#666', // 图形的描边颜色。支持的颜色格式同 color，不支持回调函数。
+                            borderWidth: 1,  // 描边线宽。为 0 时无描边。
+                            borderType: 'solid', // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+                            shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                            shadowColor: '#0f0', // 阴影颜色。支持的格式同color。
+                            shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                            shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                        },
+                        emphasis: {
+                            iconStyle: {
+                                color: 'auto', // 图形的颜色。
+                                borderColor: '#666', // 图形的描边颜色。支持的颜色格式同 color，不支持回调函数。
+                                borderWidth: 1,  // 描边线宽。为 0 时无描边。
+                                borderType: 'solid', // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+                                shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                                shadowColor: '#0f0', // 阴影颜色。支持的格式同color。
+                                shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                                shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                                opacity: .5, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                                textPosition: 'bottom', // 文本位置，'left' / 'right' / 'top' / 'bottom'。
+                                textFill: '#000', // 文本颜色，如果未设定，则依次取图标 emphasis 时候的填充色、描边色，如果都不存在，则为 '#000'。
+                                textAlign: 'center', // 文本对齐方式，'left' / 'center' / 'right'。
+                                textBackgroundColor: 'auto', // 文本区域填充色。
+                                textBorderRadius: 1, // 文本区域圆角大小。
+                                textPadding: 3, // 文本区域内边距。
+                            },
+                        },
+
+                        // 各个类型的专有配置项。在切换到某类型的时候会合并相应的配置项。
+                        option: {
+                            // line: {},
+                            // bar: {},
+                            // stack: {},
+                            // tiled: {},
+                        },
+                        // 各个类型对应的系列的列表。
+                        seriesIndex: {
+                            // line: [],
+                            // bar: [],
+                            // stack: [],
+                            // tiled: [],
+                        },
+                    },
+                    
+                    // 选框组件的控制按钮。
+                    brush: {
+                        type: 'rect', // react 、polygon、 lineX 、lineY 、keep 、clear
+                    }
+
+                },
+                iconStyle: {
+                    color: 'auto', // 图形的颜色。
+                    borderColor: '#666', // 图形的描边颜色。支持的颜色格式同 color，不支持回调函数。
+                    borderWidth: 1,  // 描边线宽。为 0 时无描边。
+                    borderType: 'solid', // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+                    shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                    shadowColor: '#0f0', // 阴影颜色。支持的格式同color。
+                    shadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+                    shadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+                },
+                emphasis: {
+
+                },
+
+                zlevel: 0,
+                z: 0,
+                left: 'auto',
+                top: 'auto',
+                right: 10,
+                bottom: 'auto',
+                width: 'auto',
+                height: 'auto',
+                tooltip: {},
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value} °C'
+                }
+            },
+            series: [{
+                    name: '最高气温',
+                    type: 'line',
+                    data: [11, 11, 15, 13, 12, 13, 10],
+                    markPoint: {
+                        data: [{
+                                type: 'max',
+                                name: '最大值'
+                            },
+                            {
+                                type: 'min',
+                                name: '最小值'
+                            }
+                        ]
+                    },
+                    markLine: {
+                        data: [{
+                            type: 'average',
+                            name: '平均值'
+                        }]
+                    }
+                },
+                {
+                    name: '最低气温',
+                    type: 'line',
+                    data: [1, -2, 2, 5, 3, 2, 0],
+                    markPoint: {
+                        data: [{
+                            name: '周最低',
+                            value: -2,
+                            xAxis: 1,
+                            yAxis: -1.5
+                        }]
+                    },
+                    markLine: {
+                        data: [{
+                                type: 'average',
+                                name: '平均值'
+                            },
+                            [{
+                                symbol: 'none',
+                                x: '90%',
+                                yAxis: 'max'
+                            }, {
+                                symbol: 'circle',
+                                label: {
+                                    normal: {
+                                        position: 'start',
+                                        formatter: '最大值'
+                                    }
+                                },
+                                type: 'max',
+                                name: '最高点'
+                            }]
+                        ]
+                    }
+                }
+            ]
+        };
+
+
+
+        myChart.setOption(option);
+    </script>
+</body>
+
+</html>
