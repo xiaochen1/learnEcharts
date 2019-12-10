@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>china map  geo </title>
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./assets/js/echarts.min.js"></script>
+	<script src="./assets/js/china.js"></script>
+
+	<style>
+		#echartMap {
+			width: 800px;
+			height: 600px;
+			margin: 0 auto;
+			background: #ccc;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="echartMap"></div>
+
+
+	<script>
+		// 基于准备好的dom，初始化echarts实例
+		var myChart = echarts.init(document.getElementById('echartMap'));
+
+		var geoCoordMap = {
+            "海南": [110.17, 19.92],
+            "河南": [113.700339, 34.751827],
+            "河北": [114.54095, 38.058913],
+            "湖北": [114.289984, 30.5942],
+            "广东": [113.293215, 23.102603],
+            "湖南": [113.03042, 28.188898],
+            "江西": [115.911671, 28.658012],
+            "黑龙江": [126.629804, 45.774197],
+            "四川": [104.112035, 30.630737],
+            "安徽": [117.321109, 31.850184],
+		} ;
+		
+		var data = [{
+				name: '海南',
+				value: 99925.73
+			},
+			{
+				name: '河南',
+				value: 17737.01
+			},
+			{
+				name: '河北',
+				value: 13177.64
+			},
+			{
+				name: '湖北',
+				value: 12174.96
+			},
+			{
+				name: '广东',
+				value: 8230.15
+			},
+			{
+				name: '湖南',
+				value: 8173.05
+			},
+			{
+				name: '江西',
+				value: 7423.08
+			},
+			{
+				name: '黑龙江',
+				value: 6829.69
+			},
+			{
+				name: '四川',
+				value: 6158.43
+			},
+			{
+				name: '安徽',
+				value: 5930.80
+			},
+		];
+
+
+		var convertData = function (data) {
+			var res = [];
+			for (var i = 0; i < data.length; i++) {
+				var geoCoord = geoCoordMap[data[i].name];
+				if (geoCoord) {
+					res.push({
+						name: data[i].name,
+						value: geoCoord.concat(data[i].value)
+					});
+				}
+			}
+			return res;
+		};
+
+		console.log(convertData(data));
+
+		// var max = 480, min = 9; // todo 
+    	var maxSize4Pin = 100, minSize4Pin = 20;
+		var option = {
+			// visualMap: {
+				// show: false,
+				// min: 0,
+				// max: 500,
+				// left: 'left',
+				// top: 'bottom',
+				// text: ['高', '低'], // 文本，默认为数值文本
+				// calculable: true,
+				// seriesIndex: [1],
+				// inRange: {
+				// 	color: ['#4F72EF'] // 黑紫黑
+				// }
+			// },
+
+			legend: {
+				orient: 'vertical',
+				y: 'bottom',
+				x: 'right',
+				data: ['chinaMap'],
+				textStyle: {
+					color: '#fff'
+				}
+			},
+			geo: {
+				show: true,
+				map: 'china',
+				label: {
+					normal: {
+						show: false
+					},
+					emphasis: {
+						show: false
+					}
+				},
+				roam: true,
+				itemStyle: {
+					normal: {
+						areaColor: '#323c48',
+						borderColor: '#111'
+					},
+					emphasis: {
+						areaColor: '#2a333d'
+					}
+				}
+			},
+			series: [
+
+				{
+				    name: '点',
+				    type: 'scatter',
+				    coordinateSystem: 'geo',
+				    symbol: 'pin',
+				    symbolSize: 100,
+				    label: {
+				        normal: {
+				            show: true,
+				            textStyle: {
+				                color: '#fff',
+				                fontSize: 9,
+				            }
+				        },
+						emphasis: {
+							show: true
+						}
+				    },
+				    itemStyle: {
+				        normal: {
+				            color: '#F62157', //标志颜色
+				        }
+				    },
+				    // zlevel: 6,
+				    data: convertData(data),
+				},
+
+				{
+					type: 'map',
+					name: 'chinaMap', // 系列名称，用于tooltip的显示，legend 的图例筛选，在 setOption 更新数据和配置项时用于指定对应的系列。
+					mapType: 'china', // china 是china.js中通过echarts.registerMap('china', {})注册的地图
+					roam: true, // 是否开启鼠标缩放和平移漫游。默认不开启。如果只想要开启缩放或者平移，可以设置成 'scale' 或者 'move'。设置成 true 为都开启
+					// center: [115.97, 29.71], // 当前视角的中心点，用经纬度表示，例如：center: [115.97, 29.71]
+					// aspectScale: 0.75, // 这个参数用于 scale 地图的长宽比。
+					// boundingCoords: null, // 二维数组，定义定位的左上角以及右下角分别所对应的经纬度。
+					zoom: 1, // 当前视角的缩放比例。
+
+					// 滚轮缩放的极限控制，通过min, max最小和最大的缩放值，默认的缩放为1。
+					scaleLimit: {
+						min: .5, // 最小的缩放值
+						max: 4, // 最大的缩放值
+					},
+					// 自定义地区的名称映射，
+					// nameMap: {
+						// '广东' : 'guangdong', // 此时地图上的广东会显示成guangdong
+					// },
+					// selectedMode: 'multiple', // 选中模式，表示是否支持多个选中，默认关闭，支持布尔值和字符串，字符串取值可选'single'表示单选，或者'multiple'表示多选。
+					// 图形上的文本标签，可用于说明图形的一些数据信息，比如值，名称等，
+					label: {
+						// 正常
+						normal: {
+							show: true, //显示省份标签
+							// position: [10, 10], // 标签的位置。 [10, 10] 、 ['50%', '50%']  、top 、right 、bottom 、left 、inside、 insideLeft 、insideRight 、insideTop 、insideBottom、insideTopLeft、insideBottomLeft  、 insideTopRight 、 insideBottomRight
+							// distance: 5, // 距离图形元素的距离。当 position 为字符描述值（如 'top'、'insideRight'）时候有效。
+							rotate: 45, //标签旋转。从 -90 度到 90 度。正值是逆时针。
+							offset: [0, 0], // 是否对文字进行偏移。默认不偏移。例如：[30, 40] 表示文字在横向上偏移 30，纵向上偏移 40。
+							// formatter: '',
+							color: "blue",
+							fontStyle: 'italic', // 文字字体的风格 , normal  、 italic 、oblique
+							fontWeight: 400, //文字字体的粗细, normal, bold, bolder, lighter
+							fontFamily: 'sans-serif', //文字的字体系列; 还可以是 'serif' , 'monospace', 'Arial', 'Courier New', 'Microsoft YaHei', ...
+							fontSize: 18, // 文字的字体大小
+							align: 'center', // 文字水平对齐方式，默认自动。 left 、right、 center
+							verticalAlign: 'center', // 文字垂直对齐方式，默认自动。可选：'top' 、 'middle' 、'bottom'
+							lineHeight: 30, // 行高。
+							backgroundColor: '#aaa', // 文字块背景色。
+							borderColor: 'transparent', // 文字块边框颜色。
+							borderWidth: 0, // 文字块边框宽度。
+							borderRadius: 0, // 文字块的圆角。
+							padding: 0, // 文字块的内边距。例如：[3, 4, 5, 6] 、[3, 4]
+							shadowColor: 'transparent', // 文字块的背景阴影颜色。
+							shadowBlur: 1, // 文字块的背景阴影长度。
+							shadowOffsetX: 0, // 文字块的背景阴影 X 偏移。
+							shadowOffsetY: 0, // 文字块的背景阴影 Y 偏移。
+							// width: 'auto', // 文字块的宽度。不指定则自动是文字的宽度。
+							height: 30, // 文字块的高度。不指定则自动是文字的高度。
+							textBorderColor: 'transparent', // 文字本身的描边颜色。
+							textBorderWidth: 0, // 文字本身的描边宽度。
+							textShadowColor: 'transparent', // 文字本身的阴影颜色。
+							textShadowBlur: 0, // 文字本身的阴影长度。
+							textShadowOffsetX: 0, // 文字本身的阴影 X 偏移。
+							textShadowOffsetY: 0, // 文字本身的阴影 Y 偏移。
+						},
+						// 高亮
+						emphasis: { //对应的鼠标悬浮效果
+							show: true,
+							fontSize: 20,
+							color: "#0f0"
+						}
+					},
+
+					itemStyle: {
+						// 正常
+						normal: {
+							areaColor: "#ffefd5", //区域颜色
+							color: 'auto', // 图形的颜色。
+							borderColor: '#009fe8', //区域边框颜色
+							borderWidth: .5, //区域边框宽度
+							borderType: 'solid', // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+							shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+							shadowColor: '#000', // 阴影颜色。
+							ShadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+							ShadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+						},
+						//鼠标滑过地图高亮的相关设置
+						emphasis: {
+							areaColor: "#ffdead", //区域颜色
+							color: 'auto', // 图形的颜色。
+							borderColor: '#4b0082', //区域边框颜色
+							borderWidth: .5, //区域边框宽度
+							borderType: 'solid', // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+							shadowBlur: 1, // 图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+							shadowColor: '#000', // 阴影颜色。
+							ShadowOffsetX: 0, // 阴影水平方向上的偏移距离。
+							ShadowOffsetY: 0, // 阴影垂直方向上的偏移距离。
+						}
+					},
+
+					zlevel: 10,
+					z: 10,
+					// left  top  right  bottom 的距离决定了 所画地图在容器中的大小。
+					left: 10,
+					top: 10,
+					right: 10,
+					bottom: 10,
+					// layoutCenter: null,
+					// layoutSize: 10, // 地图的大小，见 layoutCenter。支持相对于屏幕宽高的百分比或者绝对的像素大小。
+					geoIndex: 0,
+					// mapValueCalculation: 'sum',
+					// showLegendSymbol: '',
+					// seriesLayoutBy: 'column',
+					// datasetIndex: 0,
+
+					data: data,
+
+					// data: [
+						// {
+						// 	name: '广东',
+						// 	value: '1256',
+						// 	selected: true,
+
+							// 该数据所在区域的多边形样式设置
+							// itemStyle: {},
+
+							// 图形上的文本标签，可用于说明图形的一些数据信息，比如值，名称等，l
+							// label: {},
+
+							// 该数据所在区域的多边形高亮样式设置
+							// emphasis: {
+							// itemStyle: {},
+							// label: {},
+							// },
+
+							// 本系列每个数据项中特定的 tooltip 设定。
+							// tooltip: {
+							// position: [10, 10], //提示框浮层的位置，默认不设置时位置会跟随鼠标的位置。 ['50%', '50%'], left ,right, bottom, top, inside
+							// formatter: '', // 提示框浮层内容格式器，支持字符串模板和回调函数两种形式。
+							// backgroundColor: 'transparent', // 提示框浮层的背景颜色。
+							// borderColor: '#ccc', // 提示框浮层的边框颜色。
+							// borderWidth: 1, // 提示框浮层的边框宽。
+							// padding: 5, // 提示框浮层内边距，单位px，默认各方向内边距为5，接受数组分别设定上右下左边距。
+							// textStyle: {
+							// color: '#fff', // 文字的颜色。
+							// fontStyle: 'normal', // 文字字体的风格 , normal  、 italic 、oblique
+							// fontWeight: 400, //文字字体的粗细, normal, bold, bolder, lighter
+							// fontFamily: 'sans-serif',//文字的字体系列; 还可以是 'serif' , 'monospace', 'Arial', 'Courier New', 'Microsoft YaHei', ...
+							// fontSize: 12, // 文字的字体大小
+							// lineHeight: 30, // 行高。
+							// width: 100, // 文字块的宽度。不指定则自动是文字的宽度。
+							// height: 30, // 文字块的高度。不指定则自动是文字的高度。
+							// textBorderColor: 'transparent', // 文字本身的描边颜色。
+							// textBorderWidth: 0, // 文字本身的描边宽度。
+							// textShadowColor: 'transparent', // 文字本身的阴影颜色。
+							// textShadowBlur: 0, // 文字本身的阴影长度。
+							// textShadowOffsetX: 0, // 文字本身的阴影 X 偏移。
+							// textShadowOffsetY: 0, // 文字本身的阴影 Y 偏移。
+							// },
+							// extraCssText: 'box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);',
+							// },
+						// },
+
+						// {
+						// 	name: '上海',
+						// 	value: 1235,
+						// 	selected: true,
+						// }
+					// ],
+					markPoint: {},
+					markLine: {},
+					markArea: {},
+					silent: false,
+					tooltip: {},
+				},
+
+			]
+
+		}
+		myChart.setOption(option);
+	</script>
+</body>
+
+</html>
