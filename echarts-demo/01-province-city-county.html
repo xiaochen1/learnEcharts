@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./assets/js/jquery.min.js"></script>
+    <script src="./assets/js/echarts.min.js"></script>
+    <script src="./assets/js/china.js"></script>
+    <style>
+        #chinamap {
+            width: 800px;
+            height: 800px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="chinamap"></div>
+    </div>
+    <script>
+        let mapDOM = document.getElementById("chinamap");
+        let map = echarts.init(mapDOM);
+
+        console.log(mapDOM);
+        console.log(map);
+
+        let option = {
+            backgroundColor: "#ccc",
+            geo: {
+                map: "china",
+                aspectScale: 0.75,
+
+                coordinateSystem: "geo",
+                zoom: 1.1,
+                roam: true,
+                label: {
+                    normal: {
+                        show: true,
+                        color: "#FFFFFF",
+                        fontSize: 16
+                    },
+                    emphasis: {
+                        show: true,
+                        color: "#FFFFFF",
+                        fontSize: 16
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        show: true,
+                        //areaColor: '#0081B0',
+                        areaColor: "#1c3eb7",
+                        color: "#FFFFFF"
+                    },
+                    emphasis: {
+                        areaColor: "#028be5",
+                        color: "#FFFFFF"
+                    }
+                }
+            },
+            tooltip: {
+                trigger: "item",
+                formatter: function (params) {
+                    var value = params.value;
+                    if (!isNaN(value)) {
+                        return params.name + ":" + value;
+                    }
+                }
+            },
+            // visualMap: [{
+            //     show: false,
+            //				min: 0,
+            //				max: 10,
+            // range: [0, 10],
+            // x: "left",
+            // y: "bottom",
+            //color:['#1F98D3','#333333'],
+            // text: ["高", "低"],
+            // calculable: true,
+            // type: "piecewise"
+            // }],
+            dataset: {
+                source: [
+                    // 此时，如果series中某个数据配置项中配置 dimensions: ['date', 'open', 'close', 'highest', 'lowest']
+                    // // 每一列称为一个『维度』。
+                    // 有了上面 dimensions 定义后，下面这五个维度的名称分别为：
+                    // 'date', 'open', 'close', 'highest', 'lowest'
+                    [12, 44, 55, 66, 2],
+                    [23, 6, 16, 23, 1],
+                ]
+            },
+            series: [
+                // {
+                //     name: "中国",
+                //     position: "insideRight",
+                //     label: {
+                //         distance: 500
+                //     },
+                //     type: "effectScatter",
+                //     coordinateSystem: "geo",
+
+                //     data: self.mapData_customer,
+                //     //data:self.convertData(self.data),
+                //     symbolSize: 25,
+                //     //				label:{
+                //     //					backgroundColor:'#ffffff'
+                //     //				}
+                //     symbol: "image://data:data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkJDNzhBOUFDRUQ2MTExRThCQkRCQUFEMkYyOTI2RjBDIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkJDNzhBOUFERUQ2MTExRThCQkRCQUFEMkYyOTI2RjBDIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QkM3OEE5QUFFRDYxMTFFOEJCREJBQUQyRjI5MjZGMEMiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QkM3OEE5QUJFRDYxMTFFOEJCREJBQUQyRjI5MjZGMEMiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz48dRRmAAAAeklEQVR42oyQPQ5AQBCFx0bpOCRavZ+zrJaSFmdBr5Z1HTXvJaPEvuRLZvZ92Ww2uNJJNAWwINHdgQGsXIwedmAGGYgUzot2EoIcNPIedjtvrOU/lmLsIcZG/BJQPDxER3H0EEejX9B/SOyW540tqMAGToVzqZ3cAgwAdewVXckEKlwAAAAASUVORK5CYII="
+                // },
+                {
+                    name: "中国",
+                    position: "insideRight",
+                    legendHoverLink: true, //是否启用图例 hover 时的联动高亮
+                    effectType: "ripple", // 特效类型，目前只支持涟漪特效'ripple'。
+                    showEffectOn: 'emphasis', //
+
+                    rippleEffect: {
+                        color: '#f00', // 涟漪的颜色，默认为散点的颜色。
+                        period: 4, // 动画的周期，秒数。
+                        scale: 2, // 动画中波纹的最大缩放比例。 2倍大小
+                        brushType: 'fill',
+                    },
+
+                    label: {
+                        distance: 500
+                    },
+                    type: "effectScatter", // 带有涟漪特效动画的散点（气泡）图。
+                    // coordinateSystem: "cartesian2d", // 使用二维的直角坐标系（也称笛卡尔坐标系），通过 xAxisIndex, yAxisIndex指定相应的坐标轴组件。
+                    // coordinateSystem: "polar", // 使用极坐标系，通过 polarIndex 指定相应的极坐标组件
+                    coordinateSystem: "geo", // 使用地理坐标系，通过 geoIndex 指定相应的地理坐标系组件。
+                    // xAxisIndex: 0, // 使用的 x 轴的 index，在单个图表实例中存在多个 x 轴的时候有用。
+                    // yAxisIndex: 0, // 使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用。
+                    // polarIndex: 0, // 使用的极坐标系的 index，在单个图表实例中存在多个极坐标系的时候有用。
+                    geoIndex: 0, // 使用的地理坐标系的 index，在单个图表实例中存在多个地理坐标系的时候有用。
+                    // calendarIndex: 0, // 使用的日历坐标系的 index，在单个图表实例中存在多个日历坐标系的时候有用。
+                    data: [{
+                        "name": "1",
+                        "value": ["106.0062148589", "26.2781708837", 1]
+                    }, {
+                        "name": "1",
+                        "value": ["106.77878", "29.64393", 1]
+                    }, {
+                        "name": "1",
+                        "value": ["118.84224", "30.93978", 1]
+                    }],
+                    //data:self.convertData(self.data),
+                    symbol: "image://data:data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkEzNkQyOUNCRUQ2MTExRTg4QjBGRjcyNEQ1MUNEMzdGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkEzNkQyOUNDRUQ2MTExRTg4QjBGRjcyNEQ1MUNEMzdGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QTM2RDI5QzlFRDYxMTFFODhCMEZGNzI0RDUxQ0QzN0YiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QTM2RDI5Q0FFRDYxMTFFODhCMEZGNzI0RDUxQ0QzN0YiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4YeXtpAAAAgElEQVR42mL8//8/AwiEfDvqC6QKgdiUAQJOA3HfGi7rLSAOI0ghUFELkF3NgB20AhXXMAZ/PeID5GxmwA/8mIBEEQNhUAhSaEKEQhMmBuIAI0jhGSIUngYp7CdCYT8T0OsgH7fiUQQKns2MSAHuB6QKgNgMquAUyCSoQQwAAQYAwoIltJgYjOMAAAAASUVORK5CYII=",
+                    //symbol: '', // 标记的图形。ECharts 提供的标记类型包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
+                    //可以通过 'image://url' 设置为图片，其中 URL 为图片的链接，或者 dataURI。
+                    symbolSize: 15,
+                    synbolRotate: 20, // 标记的旋转角度。注意在 markLine 中当 symbol 为 'arrow' 时会忽略 symbolRotate 强制设置为切线的角度。
+                    symbolKeepAspect: true, // 如果 symbol 是 path:// 的形式，是否在缩放时保持该图形的长宽比。
+                    symbolOffset: [0, 0], // 标记相对于原本位置的偏移。
+                    cursor: 'pointer',
+                    label: {},
+                    itemStyle: {},
+                    emphasis: {},
+                    seriesLayoutBy: 'column',
+                    datasetIndex: 0, // 如果 series.data 没有指定，并且 dataset 存在，那么就会使用 dataset。datasetIndex 指定本系列使用那个 dataset。
+                    demensions: '',
+                    data: [],
+
+                    // 图表标注。 标记图形的相关设置
+                    markPoint: {
+                        symbol: "image://data:data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkEzNkQyOUNCRUQ2MTExRTg4QjBGRjcyNEQ1MUNEMzdGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkEzNkQyOUNDRUQ2MTExRTg4QjBGRjcyNEQ1MUNEMzdGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QTM2RDI5QzlFRDYxMTFFODhCMEZGNzI0RDUxQ0QzN0YiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QTM2RDI5Q0FFRDYxMTFFODhCMEZGNzI0RDUxQ0QzN0YiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4YeXtpAAAAgElEQVR42mL8//8/AwiEfDvqC6QKgdiUAQJOA3HfGi7rLSAOI0ghUFELkF3NgB20AhXXMAZ/PeID5GxmwA/8mIBEEQNhUAhSaEKEQhMmBuIAI0jhGSIUngYp7CdCYT8T0OsgH7fiUQQKns2MSAHuB6QKgNgMquAUyCSoQQwAAQYAwoIltJgYjOMAAAAASUVORK5CYII=",
+                        //symbol: '', // 标记的图形。ECharts 提供的标记类型包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
+                        //可以通过 'image://url' 设置为图片，其中 URL 为图片的链接，或者 dataURI。
+                        symbolSize: 15,
+                        synbolRotate: 20, // 标记的旋转角度。注意在 markLine 中当 symbol 为 'arrow' 时会忽略 symbolRotate 强制设置为切线的角度。
+                        symbolKeepAspect: true, // 如果 symbol 是 path:// 的形式，是否在缩放时保持该图形的长宽比。
+                        symbolOffset: [0, 0], // 标记相对于原本位置的偏移。
+                        silent: false, // 图形是否不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件。
+                        label: {},
+                        itemStyle: {},
+                        emphasis: {},
+                        data: [],
+
+                        animation: true, // 是否开启动画。
+                        animationThreshold: 2000, // 是否开启动画的阈值，当单个系列显示的图形数量大于这个阈值时会关闭动画。
+                        animationDuration: 1000, // 初始动画的时长，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的初始动画效果：
+                        animationEasing: cubicOut, // 初始动画的缓动效果。
+                        animationDelay: 0, // 初始动画的延迟，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的初始动画效果。
+                        animationDurationUpdate: 300, // 数据更新动画的时长。支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的更新动画效果
+                        animationEasingUpdate: cubicOut, // 数据更新动画的缓动效果。
+                        animationDelayUpdate: 0, // 数据更新动画的延迟，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的更新动画效果。
+                    },
+
+                    markLine: {
+                        silent: false, // 图形是否不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件。
+                        symbol: "image://data:data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkEzNkQyOUNCRUQ2MTExRTg4QjBGRjcyNEQ1MUNEMzdGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkEzNkQyOUNDRUQ2MTExRTg4QjBGRjcyNEQ1MUNEMzdGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QTM2RDI5QzlFRDYxMTFFODhCMEZGNzI0RDUxQ0QzN0YiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QTM2RDI5Q0FFRDYxMTFFODhCMEZGNzI0RDUxQ0QzN0YiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4YeXtpAAAAgElEQVR42mL8//8/AwiEfDvqC6QKgdiUAQJOA3HfGi7rLSAOI0ghUFELkF3NgB20AhXXMAZ/PeID5GxmwA/8mIBEEQNhUAhSaEKEQhMmBuIAI0jhGSIUngYp7CdCYT8T0OsgH7fiUQQKns2MSAHuB6QKgNgMquAUyCSoQQwAAQYAwoIltJgYjOMAAAAASUVORK5CYII=",
+                        //symbol: '', // 标记的图形。ECharts 提供的标记类型包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
+                        //可以通过 'image://url' 设置为图片，其中 URL 为图片的链接，或者 dataURI。
+                        symbolSize: 15,
+                        precision: 2,
+
+                        label: {},
+                        lineStyle: {},
+                        emphasis: {},
+
+                        data: [],
+
+                        animation: true, // 是否开启动画。
+                        animationThreshold: 2000, // 是否开启动画的阈值，当单个系列显示的图形数量大于这个阈值时会关闭动画。
+                        animationDuration: 1000, // 初始动画的时长，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的初始动画效果：
+                        animationEasing: cubicOut, // 初始动画的缓动效果。
+                        animationDelay: 0, // 初始动画的延迟，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的初始动画效果。
+                        animationDurationUpdate: 300, // 数据更新动画的时长。支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的更新动画效果
+                        animationEasingUpdate: cubicOut, // 数据更新动画的缓动效果。
+                        animationDelayUpdate: 0, // 数据更新动画的延迟，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的更新动画效果。
+                    
+                    },
+                    markArea: {
+                        silent: false, // 图形是否不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件。
+
+                        label: {},
+                        itemStyle: {},
+                        emphasis: {},
+
+                        data: [],
+
+                        animation: true, // 是否开启动画。
+                        animationThreshold: 2000, // 是否开启动画的阈值，当单个系列显示的图形数量大于这个阈值时会关闭动画。
+                        animationDuration: 1000, // 初始动画的时长，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的初始动画效果：
+                        animationEasing: cubicOut, // 初始动画的缓动效果。
+                        animationDelay: 0, // 初始动画的延迟，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的初始动画效果。
+                        animationDurationUpdate: 300, // 数据更新动画的时长。支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的更新动画效果
+                        animationEasingUpdate: cubicOut, // 数据更新动画的缓动效果。
+                        animationDelayUpdate: 0, // 数据更新动画的延迟，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的更新动画效果。
+                    
+                    },
+
+                    zlevel: 0,
+                    z: 2,
+                    silent: false, // 图形是否不响应和触发鼠标事件，默认为 false，即响应和触发鼠标事件。
+
+                    animation: true, // 是否开启动画。
+                    animationThreshold: 2000, // 是否开启动画的阈值，当单个系列显示的图形数量大于这个阈值时会关闭动画。
+                    animationDuration: 1000, // 初始动画的时长，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的初始动画效果：
+                    animationEasing: cubicOut, // 初始动画的缓动效果。
+                    animationDelay: 0, // 初始动画的延迟，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的初始动画效果。
+                    animationDurationUpdate: 300, // 数据更新动画的时长。支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的更新动画效果
+                    animationEasingUpdate: cubicOut, // 数据更新动画的缓动效果。
+                    animationDelayUpdate: 0, // 数据更新动画的延迟，支持回调函数，可以通过每个数据返回不同的 delay 时间实现更戏剧的更新动画效果。
+
+                    tooltip: {},
+                }
+            ]
+        };
+
+        map.setOption(option);
+    </script>
+</body>
+
+</html>
